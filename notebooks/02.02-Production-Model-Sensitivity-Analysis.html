@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>2.2. Production Model Sensitivity Analysis &#8212; ND Pyomo Cookbook</title>
   
@@ -15,52 +14,52 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/02.02-Production-Model-Sensitivity-Analysis';</script>
@@ -70,6 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="prev" title="2.1. Production Models with Linear Constraints" href="02.01-Production-Models-with-Linear-Constraints.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -77,23 +77,16 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+  <div id="pst-scroll-pixel-helper"></div>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -101,7 +94,6 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -109,16 +101,25 @@ const thebe_selector_output = ".output, .cell_output"
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -131,9 +132,13 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../README.html">
+  
   
   
   
@@ -143,12 +148,19 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/Kondili_1993.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/Kondili_1993.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/Kondili_1993.png" class="logo__image only-light" alt="ND Pyomo Cookbook - Home"/>
+    <img src="../_static/Kondili_1993.png" class="logo__image only-dark pst-js-only" alt="ND Pyomo Cookbook - Home"/>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -159,14 +171,14 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="01.00-Getting-Started-with-Pyomo.html">1. Getting Started with Pyomo</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="01.00-Getting-Started-with-Pyomo.html">1. Getting Started with Pyomo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="01.01-Installing-Pyomo.html">1.1. Installing a Pyomo/Python Development Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.02-Running-Pyomo-on-Google-Colab.html">1.2. Running Pyomo on Google Colab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.03-Running-Pyomo-on-the-Notre-Dame-CRC-Cluster.html">1.3. Running Pyomo on the Notre Dame CRC Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.04-Cross-Platform-Installation-of-Pyomo-and-Solvers.html">1.4. Cross-Platform Installation of Pyomo and Solvers</a></li>
 </ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="02.00-Linear-Programming.html">2. Linear Programming</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="02.00-Linear-Programming.html">2. Linear Programming</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="02.01-Production-Models-with-Linear-Constraints.html">2.1. Production Models with Linear Constraints</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">2.2. Production Model Sensitivity Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.03-Linear-Blending-Problem.html">2.3. Linear Blending Problem</a></li>
@@ -175,12 +187,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="02.06-Model-Predictive-Control-of-a-Double-Integrator.html">2.6. Model Predictive Control of a Double Integrator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.07-Non-Continuous-Objective.html">2.7. Non-Continuous Objectives</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="03.00-Assignment-Problems.html">3. Assignment Problems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="03.00-Assignment-Problems.html">3. Assignment Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="03.01-Transportation-Networks.html">3.1. Transportation Networks</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="04.00-Scheduling-with-Disjunctive-Constraints.html">4. Scheduling with Disjunctive Constraints</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="04.00-Scheduling-with-Disjunctive-Constraints.html">4. Scheduling with Disjunctive Constraints</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="04.01-Introduction_to_Disjunctive_Programming.html">4.1. Introduction to Disjunctive Programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.02-Machine-Bottleneck.html">4.2. Machine Bottleneck</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.03-Job-Shop-Scheduling.html">4.3. Job Shop Scheduling</a></li>
@@ -188,27 +200,27 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="04.05-Scheduling-Multipurpose-Batch-Processes-using-State-Task_Networks.html">4.5. Scheduling Multipurpose Batch Processes using State-Task Networks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.06-Unit-Commitment.html">4.6. Unit Commitment</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="05.00-Simulation.html">5. Simulation</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="05.00-Simulation.html">5. Simulation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="05.01-Response-of-a-First-Order-System-to-Step-and-Square-Wave-Inputs.html">5.1. Response of a First Order System to Step and Square Wave Inputs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.02-Exothermic-CSTR.html">5.2. Exothermic CSTR</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.03-Heat_Conduction_in_Various_Geometries.html">5.3. Transient Heat Conduction in Various Geometries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.04-Diffusion_Adsorption_in_Polymers.html">5.4. Diffusion with Adsorption in Polymers</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="06.00-Differential-Algebraic-Equations.html">6. Differential-Algebraic Equations</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="06.00-Differential-Algebraic-Equations.html">6. Differential-Algebraic Equations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="06.01-Unconstrained-Scalar-Optimization.html">6.1. Unconstrained Scalar Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.02-Maximizing-Concentration-of-an-Intermediate-in-a-Batch-Reactor.html">6.2. Maximizing Concentration of an Intermediate in a Batch Reactor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.03-Path-Planning-for-a-Simple-Car.html">6.3. Path Planning for a Simple Car</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.04-Soft-Landing-Apollo-11-on-the-Moon.html">6.4. Soft Landing Apollo 11 on the Moon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.05-Launching-Apollo-11-from-the-Moon.html">6.5. Ascent from Lunar Surface</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="07.00-Parameter-Estimation.html">7. Parameter Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="07.00-Parameter-Estimation.html">7. Parameter Estimation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="07.01-Parameter-Estimation-Catalytic-Reactor.html">7.1. Parameter estimation</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="08.00-Financial-Applications.html">8. Financial Applications</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="08.00-Financial-Applications.html">8. Financial Applications</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="08.01-Obtaining-Historical-Stock_-ata.html">8.1. Obtaining Historical Stock Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.02-Consolidating-and-Charting-Stock-Data.html">8.2. Consolidating and Charting Stock Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.03-Binomial-Model-for-Pricing-Options.html">8.3. Binomial Model for Pricing Options</a></li>
@@ -216,12 +228,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="08.04-MAD-Portfolio-Optimization.html">8.5. MAD Portfolio Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.05-Real-Options.html">8.6. Real Options</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="09.00-pyomo-coding-guide.html">9. Guide to Coding with Pyomo</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="09.00-pyomo-coding-guide.html">9. Guide to Coding with Pyomo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="09.01-notebook-style-guide.html">9.1. Notebook Style Guide</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../genindex.html">10. Index</a></li>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
 </ul>
 
     </div>
@@ -237,7 +249,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -246,14 +258,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -276,16 +288,16 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/jckantor/ND-Pyomo-Cookbook/blob/main/notebooks/02.02-Production-Model-Sensitivity-Analysis.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/ndcbe/ND-Pyomo-Cookbook/blob/main/notebooks/02.02-Production-Model-Sensitivity-Analysis.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onColab"
+   title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="../_static/images/logo_colab.png">
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
 </a>
@@ -307,7 +319,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/jckantor/ND-Pyomo-Cookbook" target="_blank"
+      <li><a href="https://github.com/ndcbe/ND-Pyomo-Cookbook" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -324,7 +336,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/jckantor/ND-Pyomo-Cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02.02-Production-Model-Sensitivity-Analysis.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/ndcbe/ND-Pyomo-Cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/02.02-Production-Model-Sensitivity-Analysis.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -406,26 +418,20 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script>
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -462,13 +468,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="production-model-sensitivity-analysis">
-<h1><span class="section-number">2.2. </span>Production Model Sensitivity Analysis<a class="headerlink" href="#production-model-sensitivity-analysis" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">2.2. </span>Production Model Sensitivity Analysis<a class="headerlink" href="#production-model-sensitivity-analysis" title="Link to this heading">#</a></h1>
 <p>This notebook revisits the simple production model for the purpose of sensitivity analysis. The notebook uses <a class="reference external" href="http://www.pyomo.org/">Pyomo</a> to represent the model with the <a class="reference external" href="https://github.com/coin-or/Cbc">COINOR-CBC</a> solver to calculate solutions.</p>
 <section id="imports">
-<h2><span class="section-number">2.2.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.1. </span>Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -480,15 +486,15 @@ document.write(`
 <span class="kn">import</span> <span class="nn">os.path</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">):</span>
-    <span class="o">!</span>pip install -q pyomo
+    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pyomo
     <span class="k">assert</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">))</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;cbc&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;cbc&quot;</span><span class="p">)):</span>
     <span class="k">if</span> <span class="s2">&quot;google.colab&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-        <span class="o">!</span>apt-get install -y -qq coinor-cbc
+        <span class="o">!</span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>-qq<span class="w"> </span>coinor-cbc
     <span class="k">else</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="o">!</span>conda install -c conda-forge coincbc 
+            <span class="o">!</span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>coincbc<span class="w"> </span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">pass</span>
 
@@ -501,7 +507,7 @@ document.write(`
 </div>
 </section>
 <section id="production-plan-mixed-product-strategy">
-<h2><span class="section-number">2.2.2. </span>Production plan: Mixed product strategy<a class="headerlink" href="#production-plan-mixed-product-strategy" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.2. </span>Production plan: Mixed product strategy<a class="headerlink" href="#production-plan-mixed-product-strategy" title="Link to this heading">#</a></h2>
 <p>So far we have learned that we can make $1,600 per week by manufacturing product X, and $2,400 per week manufacturing product Y.  Is it possible to do even better?</p>
 <p>To answer this question, we consider the possibilty of manufacturing both products in the same plant. The marketing department assures us that product Y will not affect the sales of product X.  So the same constraints hold as before, but now we have two decision variables, <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>.</p>
 <p><img alt="LP_ProductXY.png" src="https://github.com/jckantor/ND-Pyomo-Cookbook/blob/master/notebooks/figures/LP_ProductXY.png?raw=1" /></p>
@@ -543,7 +549,7 @@ y = 60.0
 <p>The mixed product strategy earns more profit than either of the single product srategies. Does this surprise you?  Before going further, try to explain why it is possible for a mixed product strategy to earn more profit than either of the possible single product strategies.</p>
 </section>
 <section id="what-are-the-active-constraints">
-<h2><span class="section-number">2.2.3. </span>What are the active constraints?<a class="headerlink" href="#what-are-the-active-constraints" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.3. </span>What are the active constraints?<a class="headerlink" href="#what-are-the-active-constraints" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -605,7 +611,7 @@ y = 60.0
 </div>
 </section>
 <section id="sensitivity-analysis">
-<h2><span class="section-number">2.2.4. </span>Sensitivity analysis<a class="headerlink" href="#sensitivity-analysis" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.4. </span>Sensitivity analysis<a class="headerlink" href="#sensitivity-analysis" title="Link to this heading">#</a></h2>
 <p>Sensitivity analysis is the process of determining how the solution to a linear programming problem (or for that matter, any optimization problem) depends on parameter values. This can lead to important insights. In this toy application, for example, sensitivity analysis will reveal the extra profit obtained by adding additional hours of labor. For many applications, the information obtained from sensitivity analysis can be the primary reason to create the linear program.</p>
 <p>For the general case, assume that the linear program can be written in the form</p>
 <div class="math notranslate nohighlight">
@@ -730,7 +736,7 @@ P = [2600.]
 <p>These coefficients describe the incremental profit that can be obtained for each additional unit of the corresponding resource in <span class="math notranslate nohighlight">\(b_a\)</span>.</p>
 </section>
 <section id="adjoint-sensitivity">
-<h2><span class="section-number">2.2.5. </span>Adjoint sensitivity<a class="headerlink" href="#adjoint-sensitivity" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.5. </span>Adjoint sensitivity<a class="headerlink" href="#adjoint-sensitivity" title="Link to this heading">#</a></h2>
 <p>The sensitivity coefficients can be computed as</p>
 <div class="math notranslate nohighlight">
 \[
@@ -760,7 +766,7 @@ y^T = c^T {A_a}^{-1} \implies y^T A_a = c^T \implies A_a^T y = c
 </div>
 </section>
 <section id="accessing-sensitivity-coefficients-in-pyomo">
-<h2><span class="section-number">2.2.6. </span>Accessing sensitivity coefficients in Pyomo<a class="headerlink" href="#accessing-sensitivity-coefficients-in-pyomo" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.6. </span>Accessing sensitivity coefficients in Pyomo<a class="headerlink" href="#accessing-sensitivity-coefficients-in-pyomo" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
@@ -831,7 +837,7 @@ laborB     100.00     inf    0.00  -10.00
 </div>
 </section>
 <section id="theory-of-constraints">
-<h2><span class="section-number">2.2.7. </span>Theory of constraints<a class="headerlink" href="#theory-of-constraints" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">2.2.7. </span>Theory of constraints<a class="headerlink" href="#theory-of-constraints" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>For <span class="math notranslate nohighlight">\(n\)</span> decisions you should expect to find <span class="math notranslate nohighlight">\(n\)</span> ‘active’ constraints.</p></li>
 <li><p>Each inactive constraint has an associated ‘slack.’  The associated resources have no incremental value.</p></li>
@@ -865,8 +871,10 @@ laborB     100.00     inf    0.00  -10.00
 
               
               
-                <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="02.01-Production-Models-with-Linear-Constraints.html"
@@ -893,7 +901,9 @@ laborB     100.00     inf    0.00  -10.00
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -916,7 +926,7 @@ laborB     100.00     inf    0.00  -10.00
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -929,9 +939,10 @@ By Jeffrey C. Kantor
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -946,7 +957,7 @@ By Jeffrey C. Kantor
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -955,8 +966,8 @@ By Jeffrey C. Kantor
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
   </footer>

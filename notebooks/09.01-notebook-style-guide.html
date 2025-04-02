@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" >
+<html lang="en" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>9.1. Notebook Style Guide &#8212; ND Pyomo Cookbook</title>
   
@@ -15,52 +14,52 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/09.01-notebook-style-guide';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -68,6 +67,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="prev" title="9. Guide to Coding with Pyomo" href="09.00-pyomo-coding-guide.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -75,23 +75,16 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+  <div id="pst-scroll-pixel-helper"></div>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -99,7 +92,6 @@ const thebe_selector_output = ".output, .cell_output"
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -107,16 +99,25 @@ const thebe_selector_output = ".output, .cell_output"
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -129,9 +130,13 @@ const thebe_selector_output = ".output, .cell_output"
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
+  
+    
   
 
 <a class="navbar-brand logo" href="../README.html">
+  
   
   
   
@@ -141,12 +146,19 @@ const thebe_selector_output = ".output, .cell_output"
       
     
     
-    <img src="../_static/Kondili_1993.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="../_static/Kondili_1993.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="../_static/Kondili_1993.png" class="logo__image only-light" alt="ND Pyomo Cookbook - Home"/>
+    <img src="../_static/Kondili_1993.png" class="logo__image only-dark pst-js-only" alt="ND Pyomo Cookbook - Home"/>
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -157,14 +169,14 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="01.00-Getting-Started-with-Pyomo.html">1. Getting Started with Pyomo</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="01.00-Getting-Started-with-Pyomo.html">1. Getting Started with Pyomo</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="01.01-Installing-Pyomo.html">1.1. Installing a Pyomo/Python Development Environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.02-Running-Pyomo-on-Google-Colab.html">1.2. Running Pyomo on Google Colab</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.03-Running-Pyomo-on-the-Notre-Dame-CRC-Cluster.html">1.3. Running Pyomo on the Notre Dame CRC Cluster</a></li>
 <li class="toctree-l2"><a class="reference internal" href="01.04-Cross-Platform-Installation-of-Pyomo-and-Solvers.html">1.4. Cross-Platform Installation of Pyomo and Solvers</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="02.00-Linear-Programming.html">2. Linear Programming</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="02.00-Linear-Programming.html">2. Linear Programming</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="02.01-Production-Models-with-Linear-Constraints.html">2.1. Production Models with Linear Constraints</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.02-Production-Model-Sensitivity-Analysis.html">2.2. Production Model Sensitivity Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.03-Linear-Blending-Problem.html">2.3. Linear Blending Problem</a></li>
@@ -173,12 +185,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="02.06-Model-Predictive-Control-of-a-Double-Integrator.html">2.6. Model Predictive Control of a Double Integrator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.07-Non-Continuous-Objective.html">2.7. Non-Continuous Objectives</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="03.00-Assignment-Problems.html">3. Assignment Problems</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="03.00-Assignment-Problems.html">3. Assignment Problems</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="03.01-Transportation-Networks.html">3.1. Transportation Networks</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="04.00-Scheduling-with-Disjunctive-Constraints.html">4. Scheduling with Disjunctive Constraints</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="04.00-Scheduling-with-Disjunctive-Constraints.html">4. Scheduling with Disjunctive Constraints</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="04.01-Introduction_to_Disjunctive_Programming.html">4.1. Introduction to Disjunctive Programming</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.02-Machine-Bottleneck.html">4.2. Machine Bottleneck</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.03-Job-Shop-Scheduling.html">4.3. Job Shop Scheduling</a></li>
@@ -186,27 +198,27 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="04.05-Scheduling-Multipurpose-Batch-Processes-using-State-Task_Networks.html">4.5. Scheduling Multipurpose Batch Processes using State-Task Networks</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.06-Unit-Commitment.html">4.6. Unit Commitment</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="05.00-Simulation.html">5. Simulation</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="05.00-Simulation.html">5. Simulation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="05.01-Response-of-a-First-Order-System-to-Step-and-Square-Wave-Inputs.html">5.1. Response of a First Order System to Step and Square Wave Inputs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.02-Exothermic-CSTR.html">5.2. Exothermic CSTR</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.03-Heat_Conduction_in_Various_Geometries.html">5.3. Transient Heat Conduction in Various Geometries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.04-Diffusion_Adsorption_in_Polymers.html">5.4. Diffusion with Adsorption in Polymers</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="06.00-Differential-Algebraic-Equations.html">6. Differential-Algebraic Equations</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="06.00-Differential-Algebraic-Equations.html">6. Differential-Algebraic Equations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="06.01-Unconstrained-Scalar-Optimization.html">6.1. Unconstrained Scalar Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.02-Maximizing-Concentration-of-an-Intermediate-in-a-Batch-Reactor.html">6.2. Maximizing Concentration of an Intermediate in a Batch Reactor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.03-Path-Planning-for-a-Simple-Car.html">6.3. Path Planning for a Simple Car</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.04-Soft-Landing-Apollo-11-on-the-Moon.html">6.4. Soft Landing Apollo 11 on the Moon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.05-Launching-Apollo-11-from-the-Moon.html">6.5. Ascent from Lunar Surface</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="07.00-Parameter-Estimation.html">7. Parameter Estimation</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="07.00-Parameter-Estimation.html">7. Parameter Estimation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="07.01-Parameter-Estimation-Catalytic-Reactor.html">7.1. Parameter estimation</a></li>
 </ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="08.00-Financial-Applications.html">8. Financial Applications</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="08.00-Financial-Applications.html">8. Financial Applications</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="08.01-Obtaining-Historical-Stock_-ata.html">8.1. Obtaining Historical Stock Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.02-Consolidating-and-Charting-Stock-Data.html">8.2. Consolidating and Charting Stock Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.03-Binomial-Model-for-Pricing-Options.html">8.3. Binomial Model for Pricing Options</a></li>
@@ -214,12 +226,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="08.04-MAD-Portfolio-Optimization.html">8.5. MAD Portfolio Optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="08.05-Real-Options.html">8.6. Real Options</a></li>
 </ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="09.00-pyomo-coding-guide.html">9. Guide to Coding with Pyomo</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="09.00-pyomo-coding-guide.html">9. Guide to Coding with Pyomo</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">9.1. Notebook Style Guide</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../genindex.html">10. Index</a></li>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Index</a></li>
 </ul>
 
     </div>
@@ -235,7 +247,7 @@ const thebe_selector_output = ".output, .cell_output"
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -244,14 +256,14 @@ const thebe_selector_output = ".output, .cell_output"
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -274,16 +286,16 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/jckantor/ND-Pyomo-Cookbook/blob/main/notebooks/09.01-notebook-style-guide.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/ndcbe/ND-Pyomo-Cookbook/blob/main/notebooks/09.01-notebook-style-guide.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onColab"
+   title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="../_static/images/logo_colab.png">
+    <img alt="Colab logo" src="../_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
 </a>
@@ -305,7 +317,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/jckantor/ND-Pyomo-Cookbook" target="_blank"
+      <li><a href="https://github.com/ndcbe/ND-Pyomo-Cookbook" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -322,7 +334,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/jckantor/ND-Pyomo-Cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/09.01-notebook-style-guide.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/ndcbe/ND-Pyomo-Cookbook/issues/new?title=Issue%20on%20page%20%2Fnotebooks/09.01-notebook-style-guide.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -404,26 +416,20 @@ const thebe_selector_output = ".output, .cell_output"
 </button>
 
 
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script>
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -471,14 +477,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="notebook-style-guide">
-<h1><span class="section-number">9.1. </span>Notebook Style Guide<a class="headerlink" href="#notebook-style-guide" title="Permalink to this heading">#</a></h1>
+<h1><span class="section-number">9.1. </span>Notebook Style Guide<a class="headerlink" href="#notebook-style-guide" title="Link to this heading">#</a></h1>
 <p>Keywords: style guide, notebook format</p>
 <p>Maintaining a collection of Jupyter notebooks requires attention several important details, among them are the structure and style of the individual notebooks. Maintaining a consistent notebook structure and style enables the use of tools to automate management of the overall collection. The purpose of this notebook is document the standards adopted for this particular collection.</p>
 <section id="notebook-naming-and-ancillary-generated-files">
-<h2><span class="section-number">9.1.1. </span>Notebook naming and ancillary/generated files<a class="headerlink" href="#notebook-naming-and-ancillary-generated-files" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1.1. </span>Notebook naming and ancillary/generated files<a class="headerlink" href="#notebook-naming-and-ancillary-generated-files" title="Link to this heading">#</a></h2>
 <p>All notebooks in a repository should reside in a top-level directory named <code class="docutils literal notranslate"><span class="pre">notebooks</span></code>. The filenames begin with a prefix indicating their position in book-like organization. The first two digits indicate a chapter number with 00 reserved for front matter. Replacing the digits with a character indicates an appendix. Following a separating ‘.’, a second pair of digits indicates a section with the front matter, chapter, or appendix. A hyphen separates the prefix from the rest of the filename. The standard <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> Jupyter notebook suffix is required.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>my-repository-title/
 |-- notebooks/
@@ -504,13 +510,13 @@ document.write(`
 </ul>
 </section>
 <section id="notebook-title-and-headers">
-<h2><span class="section-number">9.1.2. </span>Notebook title and headers<a class="headerlink" href="#notebook-title-and-headers" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1.2. </span>Notebook title and headers<a class="headerlink" href="#notebook-title-and-headers" title="Link to this heading">#</a></h2>
 <section id="title">
-<h3><span class="section-number">9.1.2.1. </span>Title<a class="headerlink" href="#title" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.2.1. </span>Title<a class="headerlink" href="#title" title="Link to this heading">#</a></h3>
 <p>Each notebook begins with a markdown level 1 header containing the title of the corresponding chapter or section. This should be capitalized following the Chicago Manual of Style. The hashtag <code class="docutils literal notranslate"><span class="pre">#</span></code> appears as the first line in the cell, and there is one and only one level 1 header per notebook. The title cell may include a brief summary of the notebook contents.</p>
 </section>
 <section id="subheadings">
-<h3><span class="section-number">9.1.2.2. </span>Subheadings<a class="headerlink" href="#subheadings" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.2.2. </span>Subheadings<a class="headerlink" href="#subheadings" title="Link to this heading">#</a></h3>
 <p>A notebook will typically consist of multiple sections.  The sections are organized hierarchically as markdown headings. Following the document title, the highest level heading begins as markdown level 2 (i.e., <code class="docutils literal notranslate"><span class="pre">##</span></code>). The hierarchy is strict meaning that the next level in the hierarchy, <code class="docutils literal notranslate"><span class="pre">###</span></code>, and must appear before the first heading of the next higher level. This, for example, is an allowable hierarchy:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Notebook Title
 ## First section
@@ -540,28 +546,28 @@ document.write(`
 </ul>
 </section>
 <section id="keywords">
-<h3><span class="section-number">9.1.2.3. </span>Keywords<a class="headerlink" href="#keywords" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.2.3. </span>Keywords<a class="headerlink" href="#keywords" title="Link to this heading">#</a></h3>
 <p>Keywords should be included in the level 1 headers designating a title. The keywords are specified in a new line beginning with <code class="docutils literal notranslate"><span class="pre">Keywords:</span></code> followed by a comma separated list of keyword phrases. Keywords are used to construct an index for the notebook collection.</p>
 </section>
 </section>
 <section id="external-files">
-<h2><span class="section-number">9.1.3. </span>External Files<a class="headerlink" href="#external-files" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1.3. </span>External Files<a class="headerlink" href="#external-files" title="Link to this heading">#</a></h2>
 <p>Notebooks will often incorporate figures, data, or video. Any external files must be appropriately licensed for reuse. If that isn’t possible, then that information should be accessed by linking to a resource showing the user how to properly access that information.</p>
 <p>In general, external resources should be referenced by an external link whenever possible. If the resource is in the same repository, the link should be the public repository. This practice enables cross-platform use of notebooks, and streamlines the import and use of notebooks by other users.</p>
 <section id="figures">
-<h3><span class="section-number">9.1.3.1. </span>Figures<a class="headerlink" href="#figures" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.3.1. </span>Figures<a class="headerlink" href="#figures" title="Link to this heading">#</a></h3>
 <p>Figures included within the repository should located within a common figures directory. This practice enables reuse of figures, and streamlines the editing and maintenance of figures. Figures should be <code class="docutils literal notranslate"><span class="pre">.png</span></code> or <code class="docutils literal notranslate"><span class="pre">.jpg</span></code> format as appropriate, and resized for use with the standard markdown <code class="docutils literal notranslate"><span class="pre">![]()</span></code> markup.</p>
 </section>
 <section id="data">
-<h3><span class="section-number">9.1.3.2. </span>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.3.2. </span>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
 <p>Data files distributed with the repository should be located within a common data directory.</p>
 </section>
 </section>
 <section id="design-for-portability">
-<h2><span class="section-number">9.1.4. </span>Design for Portability<a class="headerlink" href="#design-for-portability" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1.4. </span>Design for Portability<a class="headerlink" href="#design-for-portability" title="Link to this heading">#</a></h2>
 <p>Notebooks are intended as durable and robust means of communicating with a diverse audience. To this end, special effort attention must be given to making it possible to run the notebooks on multiple platforms.</p>
 <section id="installations-and-imports">
-<h3><span class="section-number">9.1.4.1. </span>Installations and Imports<a class="headerlink" href="#installations-and-imports" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.4.1. </span>Installations and Imports<a class="headerlink" href="#installations-and-imports" title="Link to this heading">#</a></h3>
 <p>It is good practice to include all necessary installations and imports in first few executable cells of a notebook, and may be included in a special section entitled <strong>Installations and imports</strong>.</p>
 <p>To the extent possible, the installation and import cells should be written to run cross-platform without raising exceptions. Code can written with the assumption that standard Python libraries, including Matplotlib, Numpy, Pandas, and Scipy, are present. Any needed installations should included in the first code cell of the notebook and written for cross-platform use. For example,</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import sys
@@ -580,7 +586,7 @@ except
 </div>
 </section>
 <section id="markdown">
-<h3><span class="section-number">9.1.4.2. </span>Markdown<a class="headerlink" href="#markdown" title="Permalink to this heading">#</a></h3>
+<h3><span class="section-number">9.1.4.2. </span>Markdown<a class="headerlink" href="#markdown" title="Link to this heading">#</a></h3>
 <p>Plain github-flavored markdown should be used wherever possible. Avoid use of non-markdown constructs, such as html tags.</p>
 <ul class="simple">
 <li><p>Any references should be collected under a separate heading entitled References, and formatted using the Chicago Manual of Style.</p></li>
@@ -589,7 +595,7 @@ except
 </section>
 </section>
 <section id="further-reading">
-<h2><span class="section-number">9.1.5. </span>Further reading<a class="headerlink" href="#further-reading" title="Permalink to this heading">#</a></h2>
+<h2><span class="section-number">9.1.5. </span>Further reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/spacetelescope/style-guides/blob/master/guides/jupyter-notebooks.md">Space Telescope Science Institute Style Guide</a></p></li>
 <li><p><a class="reference external" href="https://github.com/chrisvoncsefalvay/jupyter-best-practices">Jupyter notebook best practices and style guide</a></p></li>
@@ -624,8 +630,10 @@ except
 
               
               
-                <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="09.00-pyomo-coding-guide.html"
@@ -652,7 +660,9 @@ except
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -686,7 +696,7 @@ except
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner">
+            
 <div class="bd-footer-content__inner container">
   
   <div class="footer-item">
@@ -699,9 +709,10 @@ By Jeffrey C. Kantor
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -716,7 +727,7 @@ By Jeffrey C. Kantor
     
   </div>
   
-</div></div>
+</div>
           </footer>
         
 
@@ -725,8 +736,8 @@ By Jeffrey C. Kantor
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
   </footer>
