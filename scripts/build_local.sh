@@ -3,6 +3,5 @@
 # mkdir ./_build/
 # mkdir ./_build/html/
 # mkdir ./_build/html/_images
-# python ./scripts/process_notebooks.py
 jb build ../ND-Pyomo-Cookbook
 open ./_build/html/index.html
