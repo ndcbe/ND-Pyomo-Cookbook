@@ -6,7 +6,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>5.3. Transient Heat Conduction in Various Geometries &#8212; ND Pyomo Cookbook</title>
   
@@ -16,8 +16,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -27,22 +27,22 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -242,9 +242,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -457,8 +462,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionless-model">5.3.3. Dimensionless model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-code">5.3.4. Preliminary code</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#planar-coordinates">5.3.5. Planar coordinates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cylindrical-coordinates">5.3.6. Cylindrical coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cylindrical-coordinates">5.3.6. Cylindrical coordinates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-finite-difference">5.3.6.1. Central Finite Difference</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spherical-coordinates">5.3.7. Spherical coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debuging-degrees-of-freedom">5.3.8. Debuging Degrees of Freedom</a></li>
 </ul>
             </nav>
         </div>
@@ -481,29 +490,36 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.axes3d</span> <span class="kn">import</span> <span class="n">Axes3D</span> 
-  
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.axes3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">):</span>
-    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pyomo
-    <span class="k">assert</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="s2">&quot;google.colab&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="o">!</span>wget<span class="w"> </span><span class="s1">&#39;https://raw.githubusercontent.com/IDAES/idaes-pse/main/scripts/colab_helper.py&#39;</span>
+    <span class="kn">import</span> <span class="nn">colab_helper</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)):</span>
-    <span class="k">if</span> <span class="s2">&quot;google.colab&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-        <span class="o">!</span>wget<span class="w"> </span>-N<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;https://ampl.com/dl/open/ipopt/ipopt-linux64.zip&quot;</span>
-        <span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>-q<span class="w"> </span>ipopt-linux64
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="o">!</span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>ipopt<span class="w"> </span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">pass</span>
+    <span class="n">colab_helper</span><span class="o">.</span><span class="n">install_idaes</span><span class="p">()</span>
+    <span class="n">colab_helper</span><span class="o">.</span><span class="n">install_ipopt</span><span class="p">()</span>
 
-<span class="k">assert</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">))</span>
-<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">pyomo.dae</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">assert</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyomo.environ</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ConcreteModel</span><span class="p">,</span>
+    <span class="n">Var</span><span class="p">,</span>
+    <span class="n">Constraint</span><span class="p">,</span>
+    <span class="n">Objective</span><span class="p">,</span>
+    <span class="n">TransformationFactory</span><span class="p">,</span>
+    <span class="n">SolverFactory</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">pyomo.dae</span> <span class="kn">import</span> <span class="n">ContinuousSet</span><span class="p">,</span> <span class="n">DerivativeVar</span>
+
+<span class="c1"># Uncomment the following line if you installed Ipopt via IDAES on your local machine</span>
+<span class="c1"># but cannot find the Ipopt executable. Our Colab helper script takes care of the</span>
+<span class="c1"># # environmental variables if you are  on Colab. Otherwise, you need to either import</span>
+<span class="c1"># idaes or set the path environmental variable yourself.</span>
+<span class="c1">#</span>
+<span class="c1"># import idaes</span>
 </pre></div>
 </div>
 </div>
@@ -577,16 +593,17 @@ T'(t', 1) &amp; = 1 &amp; \forall t' &gt; 0\\
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)):</span>
-            <span class="n">rgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-            <span class="n">tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">Tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">rgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">Tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">value</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Distance r&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Time t&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Temperature T&#39;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Distance r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Time t&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Temperature T&quot;</span><span class="p">)</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">rgrid</span><span class="p">,</span> <span class="n">tgrid</span><span class="p">,</span> <span class="n">Tgrid</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -614,57 +631,105 @@ T(t, 1) &amp; = 1 &amp; \forall t &gt; 0\\
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
 <span class="n">m</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+
+<span class="c1"># This will not work because Pyomo.DAE does not know to use the boundary condition on the derivative</span>
+<span class="c1"># m.d2Tdr2 = DerivativeVar(m.T, wrt=(m.r, m.r), bounds=(-100,100))</span>
+
+<span class="c1"># This way Pyomo.DAE knows to use the boundary condition on the derivative at r=0</span>
+<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">initialize</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">pde</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
-    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
-    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+
 
 <span class="n">m</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">ic</span>  <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Initial condition</span>
+<span class="n">m</span><span class="o">.</span><span class="n">ic</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
 
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;FORWARD&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;FORWARD&#39;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
-<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;ipopt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="c1"># Boundary conditions on temperature</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Boundary conditions on temperature gradient</span>
+<span class="c1"># End is insulated</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># This needs to be backwards in time because:</span>
+<span class="c1"># 1. The initial condition is at t=0</span>
+<span class="c1"># 2. The insulated boundary condition is at r=0</span>
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span>
+<span class="p">)</span>
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span>
+<span class="p">)</span>
+
+<span class="c1"># If we do not use BACKWARDS AND BACKWARDS, we have extra degrees of freedom</span>
+<span class="kn">import</span> <span class="nn">idaes</span>
+<span class="kn">from</span> <span class="nn">idaes.core.util.model_diagnostics</span> <span class="kn">import</span> <span class="n">degrees_of_freedom</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Degrees of Freedom:&quot;</span><span class="p">,</span> <span class="n">degrees_of_freedom</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degrees of Freedom: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 <span class="n">model_plot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.4: 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.2: 
 
 ******************************************************************************
 This program contains Ipopt, a library for large-scale nonlinear optimization.
  Ipopt is released as open source code under the Eclipse Public License (EPL).
-         For more information visit https://github.com/coin-or/Ipopt
+         For more information visit http://projects.coin-or.org/Ipopt
+
+This version of Ipopt was compiled from source code available at
+    https://github.com/IDAES/Ipopt as part of the Institute for the Design of
+    Advanced Energy Systems Process Systems Engineering Framework (IDAES PSE
+    Framework) Copyright (c) 2018-2019. See https://github.com/IDAES/idaes-pse.
+
+This version of Ipopt was compiled using HSL, a collection of Fortran codes
+    for large-scale scientific computation.  All technical papers, sales and
+    publicity material resulting from use of the HSL codes within IPOPT must
+    contain the following acknowledgement:
+        HSL, a collection of Fortran codes for large-scale scientific
+        computation. See http://www.hsl.rl.ac.uk.
 ******************************************************************************
 
-This is Ipopt version 3.13.4, running with linear solver mumps.
-NOTE: Other linear solvers might be more efficient (see Ipopt documentation).
+This is Ipopt version 3.13.2, running with linear solver ma27.
 
-Number of nonzeros in equality constraint Jacobian...:    30347
+Number of nonzeros in equality constraint Jacobian...:    28102
 Number of nonzeros in inequality constraint Jacobian.:        0
 Number of nonzeros in Lagrangian Hessian.............:        0
 
-Total number of variables............................:    10299
+Total number of variables............................:    10302
                      variables with only lower bounds:        0
                 variables with lower and upper bounds:        0
                      variables with only upper bounds:        0
-Total number of equality constraints.................:    10200
+Total number of equality constraints.................:    10302
 Total number of inequality constraints...............:        0
         inequality constraints with only lower bounds:        0
    inequality constraints with lower and upper bounds:        0
@@ -672,17 +737,17 @@ Total number of inequality constraints...............:        0
 
 iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
    0  1.0000000e+00 1.00e+00 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
-   1  1.0000000e+00 1.48e-12 2.50e+01  -1.7 2.50e+03  -2.0 1.00e+00 1.00e+00h  1
-   2  1.0000000e+00 1.56e-12 8.30e-11  -1.7 2.26e-11  -2.5 1.00e+00 1.00e+00h  1
+   1  1.0000000e+00 7.62e-08 0.00e+00  -1.7 2.50e+03    -  1.00e+00 1.00e+00h  1
+   2  1.0000000e+00 1.71e-13 0.00e+00  -8.6 1.28e-09    -  1.00e+00 1.00e+00h  1
 
 Number of Iterations....: 2
 
                                    (scaled)                 (unscaled)
 Objective...............:   1.0000000000000000e+00    1.0000000000000000e+00
-Dual infeasibility......:   8.3006480378414195e-11    8.3006480378414195e-11
-Constraint violation....:   3.1190328098062865e-14    1.5595164049031494e-12
+Dual infeasibility......:   0.0000000000000000e+00    0.0000000000000000e+00
+Constraint violation....:   1.7053025658242223e-13    1.7053025658242223e-13
 Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
-Overall NLP error.......:   8.3006480378414195e-11    8.3006480378414195e-11
+Overall NLP error.......:   1.7053025658242223e-13    1.7053025658242223e-13
 
 
 Number of objective function evaluations             = 3
@@ -692,8 +757,8 @@ Number of inequality constraint evaluations          = 0
 Number of equality constraint Jacobian evaluations   = 3
 Number of inequality constraint Jacobian evaluations = 0
 Number of Lagrangian Hessian evaluations             = 2
-Total CPU secs in IPOPT (w/o function evaluations)   =      1.430
-Total CPU secs in NLP function evaluations           =      0.006
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.060
+Total CPU secs in NLP function evaluations           =      0.000
 
 EXIT: Optimal Solution Found.
 # ==========================================================
@@ -706,19 +771,19 @@ Problem:
 - Lower bound: -inf
   Upper bound: inf
   Number of objectives: 1
-  Number of constraints: 10200
-  Number of variables: 10299
+  Number of constraints: 10302
+  Number of variables: 10302
   Sense: unknown
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Message: Ipopt 3.13.4\x3a Optimal Solution Found
+  Message: Ipopt 3.13.2\x3a Optimal Solution Found
   Termination condition: optimal
   Id: 0
   Error rc: 0
-  Time: 1.0381290912628174
+  Time: 0.11686086654663086
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -727,7 +792,7 @@ Solution:
   number of solutions displayed: 0
 </pre></div>
 </div>
-<img alt="../_images/aac484258fad763a8b0b93e70e16e2a0e8856f27294c55fee66b8d5ee85d96aa.png" src="../_images/aac484258fad763a8b0b93e70e16e2a0e8856f27294c55fee66b8d5ee85d96aa.png" />
+<img alt="../_images/3cddde7cd09690119ba00b7fff623a514bb10cb36794269d5f1e3dddeea45080.png" src="../_images/3cddde7cd09690119ba00b7fff623a514bb10cb36794269d5f1e3dddeea45080.png" />
 </div>
 </div>
 </section>
@@ -744,7 +809,7 @@ Solution:
 <div class="math notranslate nohighlight">
 \[
 \begin{align*}
-\frac{\partial T}{\partial t} &amp; = \frac{\partial^2 T}{\partial t^2} + \frac{1}{r}\frac{\partial T}{\partial r}
+\frac{\partial T}{\partial t} &amp; = \frac{\partial^2 T}{\partial r^2} + \frac{1}{r}\frac{\partial T}{\partial r}
 \end{align*}
 \]</div>
 <p>with auxiliary conditions</p>
@@ -760,32 +825,113 @@ T(t, 1) &amp; = 1 &amp; \forall t &gt; 0\\
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
 <span class="n">m</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">pde</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
+<span class="c1"># This will give too many degrees of freedom</span>
+<span class="c1"># m.d2Tdr2 = DerivativeVar(m.T, wrt=(m.r, m.r))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">ic</span>  <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;CENTRAL&#39;</span><span class="p">)</span>
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;BACKWARD&#39;</span><span class="p">)</span>
-<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;ipopt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pde</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+
+
+<span class="n">m</span><span class="o">.</span><span class="n">ic</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 
 <span class="n">model_plot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># ==========================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.2: 
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+
+This version of Ipopt was compiled from source code available at
+    https://github.com/IDAES/Ipopt as part of the Institute for the Design of
+    Advanced Energy Systems Process Systems Engineering Framework (IDAES PSE
+    Framework) Copyright (c) 2018-2019. See https://github.com/IDAES/idaes-pse.
+
+This version of Ipopt was compiled using HSL, a collection of Fortran codes
+    for large-scale scientific computation.  All technical papers, sales and
+    publicity material resulting from use of the HSL codes within IPOPT must
+    contain the following acknowledgement:
+        HSL, a collection of Fortran codes for large-scale scientific
+        computation. See http://www.hsl.rl.ac.uk.
+******************************************************************************
+
+This is Ipopt version 3.13.2, running with linear solver ma27.
+
+Number of nonzeros in equality constraint Jacobian...:    12392
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:     4212
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:     4212
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.00e+00 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  0.0000000e+00 2.63e-11 0.00e+00  -1.7 2.50e+01    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   0.0000000000000000e+00    0.0000000000000000e+00
+Dual infeasibility......:   0.0000000000000000e+00    0.0000000000000000e+00
+Constraint violation....:   2.6252197116669678e-11    2.6252197116669678e-11
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   2.6252197116669678e-11    2.6252197116669678e-11
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.019
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+# ==========================================================
 # = Solver Results                                         =
 # ==========================================================
 # ----------------------------------------------------------
@@ -795,19 +941,19 @@ Problem:
 - Lower bound: -inf
   Upper bound: inf
   Number of objectives: 1
-  Number of constraints: 4060
-  Number of variables: 4110
+  Number of constraints: 4212
+  Number of variables: 4212
   Sense: unknown
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Message: Ipopt 3.13.4\x3a Optimal Solution Found
+  Message: Ipopt 3.13.2\x3a Optimal Solution Found
   Termination condition: optimal
   Id: 0
   Error rc: 0
-  Time: 0.4122738838195801
+  Time: 0.04596400260925293
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -816,9 +962,12 @@ Solution:
   number of solutions displayed: 0
 </pre></div>
 </div>
-<img alt="../_images/ce12b97ac6b65955cba0cc21799f40dc4e19b3c42a3be9db3e915a960ce56448.png" src="../_images/ce12b97ac6b65955cba0cc21799f40dc4e19b3c42a3be9db3e915a960ce56448.png" />
+<img alt="../_images/21ae9093f2885cb1dada1852a3ba0ab1a02c881addd0c1d429530683fdef635a.png" src="../_images/21ae9093f2885cb1dada1852a3ba0ab1a02c881addd0c1d429530683fdef635a.png" />
 </div>
 </div>
+<section id="central-finite-difference">
+<h3><span class="section-number">5.3.6.1. </span>Central Finite Difference<a class="headerlink" href="#central-finite-difference" title="Link to this heading">#</a></h3>
+</section>
 </section>
 <section id="spherical-coordinates">
 <h2><span class="section-number">5.3.7. </span>Spherical coordinates<a class="headerlink" href="#spherical-coordinates" title="Link to this heading">#</a></h2>
@@ -833,7 +982,7 @@ Solution:
 <div class="math notranslate nohighlight">
 \[
 \begin{align*}
-\frac{\partial T}{\partial t} &amp; = \frac{\partial^2 T}{\partial t^2} + \frac{2}{r}\frac{\partial T}{\partial r}
+\frac{\partial T}{\partial t} &amp; = \frac{\partial^2 T}{\partial r^2} + \frac{2}{r}\frac{\partial T}{\partial r}
 \end{align*}
 \]</div>
 <p>with auxiliary conditions</p>
@@ -849,32 +998,105 @@ T(t, 1) &amp; = 1 &amp; \forall t &gt; 0\\
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">ContinuousSet</span><span class="p">(</span><span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 
 <span class="n">m</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span>   <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdt</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dTdr</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">pde</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">r</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
+<span class="c1"># m.d2Tdr2 = DerivativeVar(m.T, wrt=(m.r, m.r))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span> <span class="o">=</span> <span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
 
-<span class="n">m</span><span class="o">.</span><span class="n">ic</span>  <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span>    <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;CENTRAL&#39;</span><span class="p">)</span>
-<span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;BACKWARD&#39;</span><span class="p">)</span>
-<span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;ipopt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pde</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2Tdr2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span>
+
+
+<span class="n">m</span><span class="o">.</span><span class="n">ic</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc1</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bc2</span> <span class="o">=</span> <span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">rule</span><span class="o">=</span><span class="k">lambda</span> <span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="n">m</span><span class="o">.</span><span class="n">dTdr</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+<span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+<span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 
 <span class="n">model_plot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># ==========================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.2: 
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+
+This version of Ipopt was compiled from source code available at
+    https://github.com/IDAES/Ipopt as part of the Institute for the Design of
+    Advanced Energy Systems Process Systems Engineering Framework (IDAES PSE
+    Framework) Copyright (c) 2018-2019. See https://github.com/IDAES/idaes-pse.
+
+This version of Ipopt was compiled using HSL, a collection of Fortran codes
+    for large-scale scientific computation.  All technical papers, sales and
+    publicity material resulting from use of the HSL codes within IPOPT must
+    contain the following acknowledgement:
+        HSL, a collection of Fortran codes for large-scale scientific
+        computation. See http://www.hsl.rl.ac.uk.
+******************************************************************************
+
+This is Ipopt version 3.13.2, running with linear solver ma27.
+
+Number of nonzeros in equality constraint Jacobian...:    12392
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:     4212
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:     4212
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 1.00e+00 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  0.0000000e+00 1.23e-09 0.00e+00  -1.7 2.50e+01    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 1
+
+                                   (scaled)                 (unscaled)
+Objective...............:   0.0000000000000000e+00    0.0000000000000000e+00
+Dual infeasibility......:   0.0000000000000000e+00    0.0000000000000000e+00
+Constraint violation....:   1.2267631052098105e-09    1.2267631052098105e-09
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   1.2267631052098105e-09    1.2267631052098105e-09
+
+
+Number of objective function evaluations             = 2
+Number of objective gradient evaluations             = 2
+Number of equality constraint evaluations            = 2
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 2
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 1
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.018
+Total CPU secs in NLP function evaluations           =      0.000
+
+EXIT: Optimal Solution Found.
+# ==========================================================
 # = Solver Results                                         =
 # ==========================================================
 # ----------------------------------------------------------
@@ -884,19 +1106,19 @@ Problem:
 - Lower bound: -inf
   Upper bound: inf
   Number of objectives: 1
-  Number of constraints: 4060
-  Number of variables: 4110
+  Number of constraints: 4212
+  Number of variables: 4212
   Sense: unknown
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Message: Ipopt 3.13.4\x3a Optimal Solution Found
+  Message: Ipopt 3.13.2\x3a Optimal Solution Found
   Termination condition: optimal
   Id: 0
   Error rc: 0
-  Time: 0.40662384033203125
+  Time: 0.04324674606323242
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -905,9 +1127,103 @@ Solution:
   number of solutions displayed: 0
 </pre></div>
 </div>
-<img alt="../_images/4a524bc3e75813e030b535dc8977305a3cbe65d2c80bb0976233de60dd88d748.png" src="../_images/4a524bc3e75813e030b535dc8977305a3cbe65d2c80bb0976233de60dd88d748.png" />
+<img alt="../_images/052dd3835bd7fad5743187d027cfbd000621da3a53ba7b60200ee88bb2432b92.png" src="../_images/052dd3835bd7fad5743187d027cfbd000621da3a53ba7b60200ee88bb2432b92.png" />
 </div>
 </div>
+</section>
+<section id="debuging-degrees-of-freedom">
+<h2><span class="section-number">5.3.8. </span>Debuging Degrees of Freedom<a class="headerlink" href="#debuging-degrees-of-freedom" title="Link to this heading">#</a></h2>
+<p>PDEs are tricky to solve because we need to choose the space and time discretization schemes to match the initial and boundary conditions.</p>
+<p>Let’s consider a backward formula:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation*}
+\frac{\partial T}{\partial r} \approx \frac{T_{i} - T_{i-1}}{\Delta r}
+\end{equation*}
+\]</div>
+<p>This means that for the first cell, <span class="math notranslate nohighlight">\(i=0\)</span>, which occurs at the edge of the object (<span class="math notranslate nohighlight">\(r=0\)</span> in our problem), we cannot easily estimate the derivate. Thus, we need a boundary condition and to skip the PDE equation for <span class="math notranslate nohighlight">\(r=0\)</span>.</p>
+<p>We can make a similar argument for the time derivative. We need an initial condition and to skip the PDE equation for <span class="math notranslate nohighlight">\(t=0\)</span>.</p>
+<p>For these heat transfer problems, we need to estimate <span class="math notranslate nohighlight">\(\frac{\partial^2 T}{\partial r^2}\)</span> using finite difference. Let’s consider a backward formula:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{equation*}
+\frac{\partial^2 T}{\partial r^2} \approx \frac{\frac{\partial T}{\partial r}_{i} - \frac{\partial T}{\partial r}_{i-1}}{\Delta r} \approx \frac{T_{i-2} - T_{i-1} - T_{i-1} + T+i}{\Delta r^2}
+\end{equation*}
+\]</div>
+<p>This might suggest that we need to skip the PDE for the first two cells, <span class="math notranslate nohighlight">\(i=0\)</span> and <span class="math notranslate nohighlight">\(i=1\)</span> in space to estimate the second derivative. But we have a boundary condition for the first derivative at <span class="math notranslate nohighlight">\(r=0\)</span>, so we are okay if the just skip the first cell in space (<span class="math notranslate nohighlight">\(i=0\)</span>).</p>
+<p>For these reasons, we want to choose backwards finite difference for both space and time in this problem. An early version of this notebook used forward and central, but had extra degrees of freedom.</p>
+<p>Finally, below are some codes that are extra helpful for debugging degrees of freedom for PDE discretization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check the degrees of freedom</span>
+<span class="kn">import</span> <span class="nn">idaes</span>
+<span class="kn">from</span> <span class="nn">idaes.core.util.model_diagnostics</span> <span class="kn">import</span> <span class="n">degrees_of_freedom</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Degrees of Freedom:&quot;</span><span class="p">,</span> <span class="n">degrees_of_freedom</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degrees of Freedom: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use the IDAES diagnostics toolbox to check for structural issues</span>
+<span class="kn">from</span> <span class="nn">idaes.core.util</span> <span class="kn">import</span> <span class="n">DiagnosticsToolbox</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="n">DiagnosticsToolbox</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">report_structural_issues</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_underconstrained_set</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_overconstrained_set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================
+Model Statistics
+
+        Activated Blocks: 1 (Deactivated: 0)
+        Free Variables in Activated Constraints: 4212 (External: 0)
+            Free Variables with only lower bounds: 0
+            Free Variables with only upper bounds: 0
+            Free Variables with upper and lower bounds: 0
+        Fixed Variables in Activated Constraints: 0 (External: 0)
+        Activated Equality Constraints: 4212 (Deactivated: 0)
+        Activated Inequality Constraints: 0 (Deactivated: 0)
+        Activated Objectives: 0 (Deactivated: 0)
+
+------------------------------------------------------------------------------------
+0 WARNINGS
+
+    No warnings found!
+
+------------------------------------------------------------------------------------
+1 Cautions
+
+    Caution: 72 unused variables (0 fixed)
+
+------------------------------------------------------------------------------------
+Suggested next steps:
+
+    Try to initialize/solve your model and then call report_numerical_issues()
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Under-Constrained Set
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Over-Constrained Set
+
+====================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, if you are still stuck after using the diagnostics toolbox (and <code class="docutils literal notranslate"><span class="pre">m.pprint()</span></code>), you can add temporary objective to the model to maximize the sum of one of the derivatives. Then plot the PDE solution and look for strange anomalies, which can help you hone in on the misspecification. This gives similar information as the under constrained set, but is graphical.</p>
 </section>
 </section>
 
@@ -981,8 +1297,12 @@ Solution:
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionless-model">5.3.3. Dimensionless model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-code">5.3.4. Preliminary code</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#planar-coordinates">5.3.5. Planar coordinates</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cylindrical-coordinates">5.3.6. Cylindrical coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cylindrical-coordinates">5.3.6. Cylindrical coordinates</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-finite-difference">5.3.6.1. Central Finite Difference</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spherical-coordinates">5.3.7. Spherical coordinates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#debuging-degrees-of-freedom">5.3.8. Debuging Degrees of Freedom</a></li>
 </ul>
   </nav></div>
 
@@ -1031,8 +1351,8 @@ By Jeffrey C. Kantor
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>
