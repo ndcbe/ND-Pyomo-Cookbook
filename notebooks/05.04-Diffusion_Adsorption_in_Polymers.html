@@ -541,21 +541,14 @@ c_x(t, L) &amp; = 0 &amp; t \geq 0 \\
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os.path</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">):</span>
-    <span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pyomo
-    <span class="k">assert</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;pyomo&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="s2">&quot;google.colab&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+    <span class="o">!</span>wget<span class="w"> </span><span class="s1">&#39;https://raw.githubusercontent.com/IDAES/idaes-pse/main/scripts/colab_helper.py&#39;</span>
+    <span class="kn">import</span> <span class="nn">colab_helper</span>
 
-<span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)):</span>
-    <span class="k">if</span> <span class="s2">&quot;google.colab&quot;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
-        <span class="o">!</span>wget<span class="w"> </span>-N<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;https://ampl.com/dl/open/ipopt/ipopt-linux64.zip&quot;</span>
-        <span class="o">!</span>unzip<span class="w"> </span>-o<span class="w"> </span>-q<span class="w"> </span>ipopt-linux64
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="o">!</span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>ipopt<span class="w"> </span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">pass</span>
+    <span class="n">colab_helper</span><span class="o">.</span><span class="n">install_idaes</span><span class="p">()</span>
+    <span class="n">colab_helper</span><span class="o">.</span><span class="n">install_ipopt</span><span class="p">()</span>
 
-<span class="k">assert</span><span class="p">(</span><span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">))</span>
+<span class="k">assert</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -584,19 +577,30 @@ c_x(t, L) &amp; = 0 &amp; t \geq 0 \\
 <span class="n">m</span><span class="o">.</span><span class="n">c</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">dcdx</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="c1"># m.d2cdx2 = dae.DerivativeVar(m.c, wrt=(m.x, m.x))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">pde</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">qm</span><span class="o">*</span><span class="n">KL</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">KL</span><span class="o">*</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span><span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">D</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">qm</span> <span class="o">*</span> <span class="n">KL</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">KL</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">D</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+    <span class="p">)</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bc1</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Cs</span>
 
+
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bc2</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">L</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">ic</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -604,15 +608,185 @@ c_x(t, L) &amp; = 0 &amp; t \geq 0 \\
         <span class="k">return</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span>
 
+
 <span class="c1"># transform and solve</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;ipopt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+<span class="c1"># &#39;FORWARD&#39; does not work here. Potentially because it is not stable?</span>
+<span class="c1"># &#39;BACKWARD&#39; works, but we then cannot use the boundary condition dc/dx = 0 for the second</span>
+<span class="c1"># derivative</span>
+<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+<span class="c1"># To fix the degrees of freedom, we skip BC2 at t=0</span>
+<span class="c1"># And instead add</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s2">&quot;BACKWARD&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">idaes</span>
+<span class="kn">from</span> <span class="nn">idaes.core.util.model_diagnostics</span> <span class="kn">import</span> <span class="n">degrees_of_freedom</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Degrees of Freedom:&quot;</span><span class="p">,</span> <span class="n">degrees_of_freedom</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># ==========================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degrees of Freedom: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">idaes.core.util</span> <span class="kn">import</span> <span class="n">DiagnosticsToolbox</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="n">DiagnosticsToolbox</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">report_structural_issues</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_underconstrained_set</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_overconstrained_set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================
+Model Statistics
+
+        Activated Blocks: 1 (Deactivated: 0)
+        Free Variables in Activated Constraints: 6681 (External: 0)
+            Free Variables with only lower bounds: 0
+            Free Variables with only upper bounds: 0
+            Free Variables with upper and lower bounds: 0
+        Fixed Variables in Activated Constraints: 1 (External: 0)
+        Activated Equality Constraints: 6681 (Deactivated: 0)
+        Activated Inequality Constraints: 0 (Deactivated: 0)
+        Activated Objectives: 0 (Deactivated: 0)
+
+------------------------------------------------------------------------------------
+1 WARNINGS
+
+    WARNING: Found 1640 potential evaluation errors.
+
+------------------------------------------------------------------------------------
+2 Cautions
+
+    Caution: 1 variable fixed to 0
+    Caution: 42 unused variables (0 fixed)
+
+------------------------------------------------------------------------------------
+Suggested next steps:
+
+    display_potential_evaluation_errors()
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Under-Constrained Set
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Over-Constrained Set
+
+====================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.2: 
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+
+This version of Ipopt was compiled from source code available at
+    https://github.com/IDAES/Ipopt as part of the Institute for the Design of
+    Advanced Energy Systems Process Systems Engineering Framework (IDAES PSE
+    Framework) Copyright (c) 2018-2019. See https://github.com/IDAES/idaes-pse.
+
+This version of Ipopt was compiled using HSL, a collection of Fortran codes
+    for large-scale scientific computation.  All technical papers, sales and
+    publicity material resulting from use of the HSL codes within IPOPT must
+    contain the following acknowledgement:
+        HSL, a collection of Fortran codes for large-scale scientific
+        computation. See http://www.hsl.rl.ac.uk.
+******************************************************************************
+
+This is Ipopt version 3.13.2, running with linear solver ma27.
+
+Number of nonzeros in equality constraint Jacobian...:    19800
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:     3280
+
+Total number of variables............................:     6681
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:     6681
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.50e-03 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  0.0000000e+00 5.35e-03 0.00e+00  -3.8 4.00e+00    -  1.00e+00 3.91e-03h  9
+   2  0.0000000e+00 2.02e-02 0.00e+00  -3.8 3.98e+00    -  1.00e+00 7.81e-03h  8
+   3  0.0000000e+00 5.02e-02 0.00e+00  -3.8 3.95e+00    -  1.00e+00 1.56e-02h  7
+   4  0.0000000e+00 8.36e-02 0.00e+00  -3.8 3.89e+00    -  1.00e+00 3.12e-02h  6
+   5  0.0000000e+00 8.81e-02 0.00e+00  -3.8 3.77e+00    -  1.00e+00 6.25e-02h  5
+   6  0.0000000e+00 1.12e-01 0.00e+00  -3.8 3.53e+00    -  1.00e+00 1.25e-01h  4
+   7  0.0000000e+00 1.07e-01 0.00e+00  -3.8 3.09e+00    -  1.00e+00 1.25e-01h  4
+   8  0.0000000e+00 1.32e-01 0.00e+00  -3.8 2.71e+00    -  1.00e+00 2.50e-01h  3
+   9  0.0000000e+00 1.16e-01 0.00e+00  -5.7 2.03e+00    -  1.00e+00 2.50e-01h  3
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  10  0.0000000e+00 9.40e-02 0.00e+00  -5.7 1.52e+00    -  1.00e+00 2.50e-01h  3
+  11  0.0000000e+00 7.61e-02 0.00e+00  -5.7 1.14e+00    -  1.00e+00 2.50e-01h  3
+  12  0.0000000e+00 8.13e-02 0.00e+00  -5.7 8.56e-01    -  1.00e+00 1.00e+00H  1
+  13  0.0000000e+00 6.31e-02 0.00e+00  -5.7 5.04e-02    -  1.00e+00 1.00e+00h  1
+  14  0.0000000e+00 4.32e-02 0.00e+00  -5.7 3.99e-02    -  1.00e+00 1.00e+00h  1
+  15  0.0000000e+00 2.22e-02 0.00e+00  -5.7 2.08e-02    -  1.00e+00 1.00e+00h  1
+  16  0.0000000e+00 7.64e-03 0.00e+00  -5.7 9.01e-03    -  1.00e+00 1.00e+00h  1
+  17  0.0000000e+00 2.05e-03 0.00e+00  -5.7 3.37e-03    -  1.00e+00 1.00e+00h  1
+  18  0.0000000e+00 2.25e-04 0.00e+00  -8.6 9.18e-04    -  1.00e+00 1.00e+00h  1
+  19  0.0000000e+00 2.55e-06 0.00e+00  -8.6 8.34e-05    -  1.00e+00 1.00e+00h  1
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  20  0.0000000e+00 3.43e-10 0.00e+00  -9.0 8.50e-07    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 20
+
+                                   (scaled)                 (unscaled)
+Objective...............:   0.0000000000000000e+00    0.0000000000000000e+00
+Dual infeasibility......:   0.0000000000000000e+00    0.0000000000000000e+00
+Constraint violation....:   1.7143582407461182e-12    3.4288879173163114e-10
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   1.7143582407461182e-12    3.4288879173163114e-10
+
+
+Number of objective function evaluations             = 110
+Number of objective gradient evaluations             = 21
+Number of equality constraint evaluations            = 110
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 21
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 20
+Total CPU secs in IPOPT (w/o function evaluations)   =      0.376
+Total CPU secs in NLP function evaluations           =      0.011
+
+EXIT: Optimal Solution Found.
+# ==========================================================
 # = Solver Results                                         =
 # ==========================================================
 # ----------------------------------------------------------
@@ -622,19 +796,19 @@ Problem:
 - Lower bound: -inf
   Upper bound: inf
   Number of objectives: 1
-  Number of constraints: 6682
-  Number of variables: 6683
+  Number of constraints: 6681
+  Number of variables: 6681
   Sense: unknown
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Message: Ipopt 3.13.4\x3a Optimal Solution Found
+  Message: Ipopt 3.13.2\x3a Optimal Solution Found
   Termination condition: optimal
   Id: 0
   Error rc: 0
-  Time: 1.7579870223999023
+  Time: 0.4426131248474121
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -660,16 +834,17 @@ Solution:
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
-            <span class="n">xgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-            <span class="n">tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">cgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">xgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">tgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">cgrid</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span><span class="o">.</span><span class="n">value</span>
 
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Distance x&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Time t&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Concentration C&#39;</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Distance x&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Time t&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Concentration C&quot;</span><span class="p">)</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">tgrid</span><span class="p">,</span> <span class="n">cgrid</span><span class="p">)</span>
+
 
 <span class="c1"># visualization</span>
 <span class="n">model_plot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
@@ -677,7 +852,7 @@ Solution:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8ba8b561bebbeceb40f5909f21e72d3bd9cc8fcccf0535a129a82d6314e6d708.png" src="../_images/8ba8b561bebbeceb40f5909f21e72d3bd9cc8fcccf0535a129a82d6314e6d708.png" />
+<img alt="../_images/a0d6df2ab0c1b2da7863c674ca4febfe01338207f11a9b58636a0a27e12ac731.png" src="../_images/a0d6df2ab0c1b2da7863c674ca4febfe01338207f11a9b58636a0a27e12ac731.png" />
 </div>
 </div>
 </section>
@@ -736,19 +911,26 @@ C &amp; = \frac{1}{K} \\
 
 <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="n">m</span><span class="o">.</span><span class="n">dcdx</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-<span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+<span class="c1"># m.d2cdx2 = dae.DerivativeVar(m.c, wrt=(m.x, m.x))</span>
+<span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span> <span class="o">=</span> <span class="n">dae</span><span class="o">.</span><span class="n">DerivativeVar</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">pde</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span><span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
+    <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dcdt</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">m</span><span class="o">.</span><span class="n">d2cdx2</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bc1</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">Cs</span>
 
+
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">bc2</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+
 
 <span class="nd">@m</span><span class="o">.</span><span class="n">Constraint</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">ic</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -756,17 +938,163 @@ C &amp; = \frac{1}{K} \\
         <span class="k">return</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Constraint</span><span class="o">.</span><span class="n">Skip</span>
     <span class="k">return</span> <span class="n">m</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span>
 
+
 <span class="c1"># transform and solve</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s1">&#39;dae.finite_difference&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;ipopt&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">pyo</span><span class="o">.</span><span class="n">TransformationFactory</span><span class="p">(</span><span class="s2">&quot;dae.finite_difference&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">apply_to</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">wrt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">nfe</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Remove final degree of freedom</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dcdx</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">fix</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Degrees of Freedom:&quot;</span><span class="p">,</span> <span class="n">degrees_of_freedom</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degrees of Freedom: 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="n">DiagnosticsToolbox</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">report_structural_issues</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_underconstrained_set</span><span class="p">()</span>
+<span class="n">dt</span><span class="o">.</span><span class="n">display_overconstrained_set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>====================================================================================
+Model Statistics
+
+        Activated Blocks: 1 (Deactivated: 0)
+        Free Variables in Activated Constraints: 20551 (External: 0)
+            Free Variables with only lower bounds: 0
+            Free Variables with only upper bounds: 0
+            Free Variables with upper and lower bounds: 0
+        Fixed Variables in Activated Constraints: 1 (External: 0)
+        Activated Equality Constraints: 20551 (Deactivated: 0)
+        Activated Inequality Constraints: 0 (Deactivated: 0)
+        Activated Objectives: 0 (Deactivated: 0)
+
+------------------------------------------------------------------------------------
+1 WARNINGS
+
+    WARNING: Found 5100 potential evaluation errors.
+
+------------------------------------------------------------------------------------
+2 Cautions
+
+    Caution: 1 variable fixed to 0
+    Caution: 5203 unused variables (0 fixed)
+
+------------------------------------------------------------------------------------
+Suggested next steps:
+
+    display_potential_evaluation_errors()
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Under-Constrained Set
+
+====================================================================================
+====================================================================================
+Dulmage-Mendelsohn Over-Constrained Set
+
+====================================================================================
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pyo</span><span class="o">.</span><span class="n">SolverFactory</span><span class="p">(</span><span class="s2">&quot;ipopt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
 
 <span class="n">model_plot</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># ==========================================================
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ipopt 3.13.2: 
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit http://projects.coin-or.org/Ipopt
+
+This version of Ipopt was compiled from source code available at
+    https://github.com/IDAES/Ipopt as part of the Institute for the Design of
+    Advanced Energy Systems Process Systems Engineering Framework (IDAES PSE
+    Framework) Copyright (c) 2018-2019. See https://github.com/IDAES/idaes-pse.
+
+This version of Ipopt was compiled using HSL, a collection of Fortran codes
+    for large-scale scientific computation.  All technical papers, sales and
+    publicity material resulting from use of the HSL codes within IPOPT must
+    contain the following acknowledgement:
+        HSL, a collection of Fortran codes for large-scale scientific
+        computation. See http://www.hsl.rl.ac.uk.
+******************************************************************************
+
+This is Ipopt version 3.13.2, running with linear solver ma27.
+
+Number of nonzeros in equality constraint Jacobian...:    61150
+Number of nonzeros in inequality constraint Jacobian.:        0
+Number of nonzeros in Lagrangian Hessian.............:    10200
+
+Total number of variables............................:    20551
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:        0
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:    20551
+Total number of inequality constraints...............:        0
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:        0
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 5.00e+00 0.00e+00  -1.0 0.00e+00    -  0.00e+00 0.00e+00   0
+   1  0.0000000e+00 4.99e+00 0.00e+00  -1.0 1.25e+04    -  1.00e+00 1.95e-03h 10
+   2  0.0000000e+00 4.98e+00 0.00e+00  -1.0 1.25e+04    -  1.00e+00 1.95e-03h 10
+   3  0.0000000e+00 4.97e+00 0.00e+00  -1.0 1.25e+04    -  1.00e+00 1.95e-03h 10
+   4  0.0000000e+00 4.96e+00 0.00e+00  -1.0 1.24e+04    -  1.00e+00 1.95e-03h 10
+   5  0.0000000e+00 4.95e+00 0.00e+00  -1.0 1.24e+04    -  1.00e+00 1.95e-03h 10
+   6  0.0000000e+00 4.94e+00 0.00e+00  -1.0 1.24e+04    -  1.00e+00 1.95e-03h 10
+   7  0.0000000e+00 4.93e+00 0.00e+00  -1.0 1.24e+04    -  1.00e+00 1.95e-03h 10
+   8  0.0000000e+00 4.92e+00 0.00e+00  -1.0 1.23e+04    -  1.00e+00 1.95e-03h 10
+   9  0.0000000e+00 4.91e+00 0.00e+00  -1.0 1.23e+04    -  1.00e+00 1.95e-03h 10
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+  10  0.0000000e+00 4.90e+00 0.00e+00  -1.0 1.23e+04    -  1.00e+00 1.95e-03h 10
+  11  0.0000000e+00 1.24e+03 0.00e+00  -1.0 1.23e+04    -  1.00e+00 1.00e+00w  1
+  12  0.0000000e+00 2.74e+01 0.00e+00  -1.0 1.19e+03    -  1.00e+00 1.00e+00w  1
+  13  0.0000000e+00 5.64e-01 0.00e+00  -1.0 1.85e+01    -  1.00e+00 1.00e+00h  1
+  14  0.0000000e+00 1.54e-03 0.00e+00  -1.7 3.02e-01    -  1.00e+00 1.00e+00h  1
+  15  0.0000000e+00 2.23e-08 0.00e+00  -3.8 7.66e-04    -  1.00e+00 1.00e+00h  1
+  16  0.0000000e+00 3.84e-13 0.00e+00  -9.0 8.37e-09    -  1.00e+00 1.00e+00h  1
+
+Number of Iterations....: 16
+
+                                   (scaled)                 (unscaled)
+Objective...............:   0.0000000000000000e+00    0.0000000000000000e+00
+Dual infeasibility......:   0.0000000000000000e+00    0.0000000000000000e+00
+Constraint violation....:   3.8369307731045410e-13    3.8369307731045410e-13
+Complementarity.........:   0.0000000000000000e+00    0.0000000000000000e+00
+Overall NLP error.......:   3.8369307731045410e-13    3.8369307731045410e-13
+
+
+Number of objective function evaluations             = 118
+Number of objective gradient evaluations             = 17
+Number of equality constraint evaluations            = 120
+Number of inequality constraint evaluations          = 0
+Number of equality constraint Jacobian evaluations   = 17
+Number of inequality constraint Jacobian evaluations = 0
+Number of Lagrangian Hessian evaluations             = 16
+Total CPU secs in IPOPT (w/o function evaluations)   =      1.755
+Total CPU secs in NLP function evaluations           =      0.029
+
+EXIT: Optimal Solution Found.
+# ==========================================================
 # = Solver Results                                         =
 # ==========================================================
 # ----------------------------------------------------------
@@ -776,19 +1104,19 @@ Problem:
 - Lower bound: -inf
   Upper bound: inf
   Number of objectives: 1
-  Number of constraints: 20501
-  Number of variables: 20503
+  Number of constraints: 20551
+  Number of variables: 20551
   Sense: unknown
 # ----------------------------------------------------------
 #   Solver Information
 # ----------------------------------------------------------
 Solver: 
 - Status: ok
-  Message: Ipopt 3.13.4\x3a Optimal Solution Found
+  Message: Ipopt 3.13.2\x3a Optimal Solution Found
   Termination condition: optimal
   Id: 0
   Error rc: 0
-  Time: 3.6713459491729736
+  Time: 1.8977868556976318
 # ----------------------------------------------------------
 #   Solution Information
 # ----------------------------------------------------------
@@ -797,7 +1125,7 @@ Solution:
   number of solutions displayed: 0
 </pre></div>
 </div>
-<img alt="../_images/a1645d5e5158884d9caf5f8e98248f807212d5a0ef144198374f036405b092c7.png" src="../_images/a1645d5e5158884d9caf5f8e98248f807212d5a0ef144198374f036405b092c7.png" />
+<img alt="../_images/c12e04ef9de12b30cbf4e04c97387b70e631315b11a1a1d063be96abf095d3e5.png" src="../_images/c12e04ef9de12b30cbf4e04c97387b70e631315b11a1a1d063be96abf095d3e5.png" />
 </div>
 </div>
 </section>
